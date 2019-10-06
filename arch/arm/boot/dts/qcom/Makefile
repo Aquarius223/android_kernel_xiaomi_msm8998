@@ -281,6 +281,7 @@ always          += msm8998-mtp.dtb \
 	sagit-msm8998-mtp.dtb \
 	sagit-msm8998-v2-mtp.dtb \
 	sagit-msm8998-v2.1-mtp.dtb
+always          += $(dtbo-y)
 subdir-y        := $(dts-dirs)
 else ifeq ($(CONFIG_MACH_XIAOMI_CHIRON),y)
 always          += msm8998-mtp.dtb \
@@ -290,6 +291,7 @@ always          += msm8998-mtp.dtb \
 	chiron-msm8998-mtp.dtb \	
 	chiron-msm8998-v2-mtp.dtb \	
 	chiron-msm8998-v2.1-mtp.dtb
+always          += $(dtbo-y)
 subdir-y        := $(dts-dirs)
 else
 always          := $(dtb-y)
