@@ -2258,34 +2258,3 @@ endif
 source "lib/Kconfig"
 
 source "arch/arm/kvm/Kconfig"
-
-# Xiaomi configuration options
-
-config MACH_XIAOMI
-    bool "XIAOMI device"
-    depends on ARCH_QCOM
-    help
-    Support for Xiaomi products
-
-config MACH_XIAOMI_MSM8998
-    bool "XIAOMI MSM8998"
-    depends on ARCH_MSM8998
-    select MACH_XIAOMI
-    help
-    Support for Xiaomi MSM8998 variants
-
-menu "Xiaomi board selection"
-
-config MACH_XIAOMI_SAGIT
-    bool "XIAOMI_SAGIT board"
-    select MACH_XIAOMI_MSM8998
-    help
-    Support for Xiaomi 6 variant
-
-config MACH_XIAOMI_CHIRON
-    bool "XIAOMI_CHIRON board"
-    select MACH_XIAOMI_MSM8998
-    help
-    Support for Xiaomi MIX 2 variant
-
-endmenu
