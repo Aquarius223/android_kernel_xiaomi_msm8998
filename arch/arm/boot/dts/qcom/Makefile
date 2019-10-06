@@ -273,9 +273,29 @@ dtb-$(CONFIG_ARCH_SDM630) += sdm630-rumi.dtb \
 	sdm455-internal-codec-rcm.dtb
 
 ifeq ($(CONFIG_ARM64),y)
+ifeq ($(CONFIG_MACH_XIAOMI_SAGIT),y)
+always          += msm8998-mtp.dtb \
+	msm8998-v2-mtp.dtb \
+	msm8998-v2.1-mtp.dtb \
+	msm8998-v2.1-mtp-4k-display.dtb \
+	sagit-msm8998-mtp.dtb \
+	sagit-msm8998-v2-mtp.dtb \
+	sagit-msm8998-v2.1-mtp.dtb
+subdir-y        := $(dts-dirs)
+else ifeq ($(CONFIG_MACH_XIAOMI_CHIRON),y)
+always          += msm8998-mtp.dtb \
+	msm8998-v2-mtp.dtb \
+	msm8998-v2.1-mtp.dtb \
+	msm8998-v2.1-mtp-4k-display.dtb \
+	chiron-msm8998-mtp.dtb \	
+	chiron-msm8998-v2-mtp.dtb \	
+	chiron-msm8998-v2.1-mtp.dtb
+subdir-y        := $(dts-dirs)
+else
 always          := $(dtb-y)
 always          += $(dtbo-y)
 subdir-y        := $(dts-dirs)
+endif
 else
 targets += dtbs
 targets += $(addprefix ../, $(dtb-y))
