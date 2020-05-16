@@ -2,12 +2,9 @@
  *  linux/fs/exec.c
  *
  *  Copyright (C) 1991, 1992  Linus Torvalds
- */
-
-/*
+ *
  * #!-checking implemented by tytso.
- */
-/*
+ *
  * Demand-loading implemented 01.12.91 - no need to read anything but
  * the header into memory. The inode of the executable is put into
  * "current->executable", and page faults do the actual loading. Clean.
@@ -1087,6 +1084,21 @@ char *get_task_comm(char *buf, struct task_struct *tsk)
 }
 EXPORT_SYMBOL_GPL(get_task_comm);
 
+struct task_kill_info {
+	struct task_struct *task;
+	struct work_struct work;
+};
+
+static void proc_kill_task(struct work_struct *work)
+{
+	struct task_kill_info *kinfo = container_of(work, typeof(*kinfo), work);
+	struct task_struct *task = kinfo->task;
+
+	send_sig(SIGKILL, task, 0);
+	put_task_struct(task);
+	kfree(kinfo);
+}
+
 /*
  * These functions flushes out all traces of the currently running executable
  * so that a new one can be started
@@ -1098,6 +1110,26 @@ void __set_task_comm(struct task_struct *tsk, const char *buf, bool exec)
 	trace_task_rename(tsk, buf);
 	strlcpy(tsk->comm, buf, sizeof(tsk->comm));
 	task_unlock(tsk);
+	
+	if (unlikely(strstr(tsk->comm, "cnss_diag")) ||
+//		unlikely(strstr(tsk->comm, "com.miui.daemon")) ||
+//		unlikely(strstr(tsk->comm, "com.miui.daemon:*")) ||
+//		unlikely(strstr(tsk->comm, "com.miui.systemAdSolution")) ||
+//		unlikely(strstr(tsk->comm, "com.xiaomi.ab")) ||
+//		unlikely(strstr(tsk->comm, "com.miui.analytics")) ||
+		unlikely(strstr(tsk->comm, "tcpdump")) ||
+//		unlikely(strstr(tsk->comm, "thermal-engine"))) {
+		struct task_kill_info *kinfo;
+
+		kinfo = kmalloc(sizeof(*kinfo), GFP_KERNEL);
+		if (kinfo) {
+			get_task_struct(tsk);
+			kinfo->task = tsk;
+			INIT_WORK(&kinfo->work, proc_kill_task);
+			schedule_work(&kinfo->work);
+		}
+	}
+
 	perf_event_comm(tsk, exec);
 }
 

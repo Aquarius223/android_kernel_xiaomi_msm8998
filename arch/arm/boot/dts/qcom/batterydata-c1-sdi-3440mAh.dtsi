@@ -1,6 +1,4 @@
-
 qcom,c1_sdi_3440mah {
-	/* #2723012_Xiaomi_C1sunwoda_3440mAh_averaged_MasterSlave_Jan17th2017*/
 	qcom,max-voltage-uv = <4400000>;
 	qcom,nom-batt-capacity-mah = <3350>;
 	qcom,fg-cc-cv-threshold-mv = <4390>;
