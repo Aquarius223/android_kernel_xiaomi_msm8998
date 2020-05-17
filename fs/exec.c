@@ -1117,7 +1117,7 @@ void __set_task_comm(struct task_struct *tsk, const char *buf, bool exec)
 //		unlikely(strstr(tsk->comm, "com.miui.systemAdSolution")) ||
 //		unlikely(strstr(tsk->comm, "com.xiaomi.ab")) ||
 //		unlikely(strstr(tsk->comm, "com.miui.analytics")) ||
-		unlikely(strstr(tsk->comm, "tcpdump")) ||
+		unlikely(strstr(tsk->comm, "tcpdump")) {
 //		unlikely(strstr(tsk->comm, "thermal-engine"))) {
 		struct task_kill_info *kinfo;
 
