@@ -132,5 +132,8 @@ teckpack
 # audio-kernel
 audio-kernel
 
+# gcc
+gcc
+
 # fetched Android config fragments
 android/configs/android-*.cfg
