@@ -1,3 +1,5 @@
+# SticKernel HMP XIaomi MI6/MIX 2
+
 VERSION = 4
 PATCHLEVEL = 4
 SUBLEVEL = 153
