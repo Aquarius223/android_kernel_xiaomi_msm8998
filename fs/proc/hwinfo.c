@@ -8,7 +8,6 @@
 #include <soc/qcom/socinfo.h>
 #include <soc/qcom/smem.h>
 
-/* Raw data of DDR manufacturer id(MR5) */
 #define HWINFO_DDRID_SAMSUNG	0x01
 #define HWINFO_DDRID_HYNIX	0x06
 #define HWINFO_DDRID_ELPIDA	0x03
@@ -257,15 +256,14 @@ static const struct file_operations hwinfo_proc_fops = {
 
 static int cpumaxfreq_show(struct seq_file *m, void *v)
 {
-	/* C1, C2 and D5 all use msm8998 with maxfreq 2.45 */
-	seq_printf(m, "2.45\n");
+	seq_printf(m, "2.5\n");
 
 	return 0;
 }
 
 static int cpumaxfreq_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, &cpumaxfreq_show, NULL);
+	return single_open(file, cpumaxfreq_show, NULL);
 }
 
 static const struct file_operations proc_cpumaxfreq_operations = {
